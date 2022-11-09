@@ -1,3 +1,4 @@
+import Grid.Grid;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -6,46 +7,45 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import static java.lang.Thread.sleep;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 public class App extends Application {
+
+    boolean isInPause = true;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws InterruptedException {
+    public void start(Stage primaryStage) {
         Group root = new Group();
         Button restart = new Button("Restart");
+        Button switchPause = new Button("Pause");
         VBox buttons = new VBox();
         HBox total = new HBox();
-        Grid grid = new Grid(1000,1000,20,20);
+        Grid grid = new Grid(600,600,20,20);
 
         root.getChildren().add(total);
         total.getChildren().add(buttons);
         total.getChildren().add(grid);
         buttons.getChildren().add(restart);
+        buttons.getChildren().add(switchPause);
         restart.setOnMouseClicked(grid::restart);
+        switchPause.setOnMouseClicked((value)->isInPause = !isInPause);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         grid.repaint();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    try {
-                        sleep(50);
-                        grid.model.activation();
-                        grid.repaint();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
 
+        ScheduledThreadPoolExecutor threadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+        threadPoolExecutor.scheduleAtFixedRate(() -> {
+            if(!isInPause) {
+                grid.getModel().activation();
+                grid.repaint();
             }
-        }).start();
+        }, 0, 50 , TimeUnit.MILLISECONDS);
     }
 }
 
