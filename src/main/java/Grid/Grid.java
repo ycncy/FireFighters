@@ -15,7 +15,6 @@ public class Grid extends Canvas {
     private double colCount;
     private double rowCount;
     private Model model;
-    private List<Element> elements = new ArrayList<>();
     private Visitor paintingVisitor = new PaintingVisitor();
 
     public Grid(int width, int height, int colCount, int rowCount) {
@@ -40,6 +39,12 @@ public class Grid extends Canvas {
     private void mousePressed(MouseEvent mouseEvent) {
         model.activation();
         repaint();
+    }
+
+    public void activation () {
+        for (Element element : model.getElements()) {
+            element.accept(paintingVisitor);
+        }
     }
 
     public void repaint() {

@@ -1,5 +1,6 @@
 package Grid;
 
+import Model.Model;
 import Util.Position;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class FireFighter implements Element {
     }
 
     @Override
-    public void activate (Position position, Grid grid) {
-
+    public List<Element> activate(Grid grid, Model model) {
+        return null;
     }
 
     @Override

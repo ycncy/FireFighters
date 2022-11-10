@@ -1,8 +1,11 @@
 package Grid;
 
+import Model.Model;
 import Util.Position;
 
+import java.util.List;
+
 public interface Element {
-    void activate(Position position, Grid grid);
+    List<Element> activate(Grid grid, Model model);
     void accept(Visitor visitor);
 }

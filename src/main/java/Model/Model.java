@@ -36,7 +36,7 @@ public class Model {
     public void activation() {
         ffNewPositions = new ArrayList<>();
         for (Element element : elements) {
-            element.active();
+            if (element.activate(grid, this) != null) elements.addAll(element.activate(grid, this));
             element.accept(paintingVisitor);
         }
         for (Position ff : firefighters) {
@@ -46,20 +46,7 @@ public class Model {
             ffNewPositions.add(newPosition);
         }
         firefighters = ffNewPositions;
-        if (step % 2 == 0) {
-            List<Position> newFires = new ArrayList<>();
-            for (Position fire : fires) {
-                newFires.addAll(activateFire(fire));
-            }
-            for (Position newFire : newFires)
-                paintingVisitor.visitFire(new Fire(grid, new Position(newFire.row(), newFire.col())));
-            fires.addAll(newFires);
-        }
         step++;
-    }
-
-    private List<Position> activateFire(Position position) {
-        return position.next(position, grid);
     }
 
     private Position activateFirefighter(Position position) {
@@ -95,5 +82,17 @@ public class Model {
             }
         }
         return position;
+    }
+
+    public Element getElementByPosition (Position position) {
+
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public List<Element> getElements() {
+        return elements;
     }
 }
