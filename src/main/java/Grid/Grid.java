@@ -16,10 +16,10 @@ public class Grid extends Canvas {
     private double rowCount;
     private Model model;
     private List<Element> elements = new ArrayList<>();
-    private ConcretePaintingVisitor concretePaintingVisitor = new ConcretePaintingVisitor();
+    private Visitor paintingVisitor = new PaintingVisitor();
 
     public Grid(int width, int height, int colCount, int rowCount) {
-        super(width,height);
+        super(width, height);
         this.width = width;
         this.height = height;
         this.colCount = colCount;
@@ -27,38 +27,36 @@ public class Grid extends Canvas {
         setFocusTraversable(true);
         setOnMousePressed(this::mousePressed);
         model = new Model(this);
-        model.initialisation(3,8);
+        model.initialisation(3, 8);
     }
 
-    public void restart(MouseEvent mouseEvent){
+    public void restart(MouseEvent mouseEvent) {
         model = new Model(this);
-        model.initialisation(3,6);
-        getGraphicsContext2D().clearRect(0,0,width, height);
+        model.initialisation(3, 6);
+        getGraphicsContext2D().clearRect(0, 0, width, height);
         repaint();
     }
+
     private void mousePressed(MouseEvent mouseEvent) {
         model.activation();
         repaint();
     }
 
-    public void repaint(){
-        for(int col = 0; col < colCount; col++)
-            getGraphicsContext2D().strokeLine(0, col*width/colCount, height, col*width/colCount);
-        for(int row = 0; row < rowCount;row++)
-            getGraphicsContext2D().strokeLine(row*height/rowCount,0,row*height/rowCount, width);
+    public void repaint() {
+        for (int col = 0; col < colCount; col++)
+            getGraphicsContext2D().strokeLine(0, col * width / colCount, height, col * width / colCount);
+        for (int row = 0; row < rowCount; row++)
+            getGraphicsContext2D().strokeLine(row * height / rowCount, 0, row * height / rowCount, width);
         for (Element element : elements) {
-            element.accept(concretePaintingVisitor);
+            element.accept(paintingVisitor);
         }
     }
 
-    public void paint(int row, int col) {
-        getGraphicsContext2D().setFill(Color.WHITE);
-        getGraphicsContext2D().fillRect(row*height/rowCount,col*width/colCount,height/rowCount,width/colCount);
-    }
-
-    public void addElement (Element element) {
+    public void addElement(Element element) {
         elements.add(element);
     }
+
+    //**********************GETTERS**************************//
 
     public double getGridWidth() {
         return width;

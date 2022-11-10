@@ -21,12 +21,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.setResizable(false);
         Group root = new Group();
         Button restart = new Button("Restart");
         Button switchPause = new Button("Pause");
         VBox buttons = new VBox();
         HBox total = new HBox();
-        Grid grid = new Grid(600,600,20,20);
+        Grid grid = new Grid(650,650,20,20);
 
         root.getChildren().add(total);
         total.getChildren().add(buttons);

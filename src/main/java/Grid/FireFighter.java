@@ -1,18 +1,28 @@
 package Grid;
 
+import Util.Position;
+
+import java.util.List;
+
 public class FireFighter implements Element {
 
     public Grid grid;
-    public int row, col;
+    public Position position;
 
-    public FireFighter(Grid grid, int row, int col) {
+    public FireFighter(Grid grid, Position position) {
         this.grid = grid;
-        this.row = row;
-        this.col = col;
+        this.position = position;
     }
 
     @Override
-    public void accept(PaintingVisitor visitor) {
+    public void activate (Position position, Grid grid) {
+
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
         visitor.visitFireFighter(this);
     }
+
+
 }

@@ -1,5 +1,8 @@
 package Grid;
 
+import Util.Position;
+
 public interface Element {
-    void accept(PaintingVisitor visitor);
+    void activate(Position position, Grid grid);
+    void accept(Visitor visitor);
 }
