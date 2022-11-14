@@ -1,3 +1,4 @@
+import View.Grid;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,7 +22,7 @@ public class App extends Application {
         Button restart = new Button("Restart");
         VBox buttons = new VBox();
         HBox total = new HBox();
-        Grid grid = new Grid(1000,1000,20,20);
+        Grid grid = new Grid(650,650,20,20);
 
         root.getChildren().add(total);
         total.getChildren().add(buttons);
@@ -37,7 +38,7 @@ public class App extends Application {
                 while(true){
                     try {
                         sleep(50);
-                        grid.model.activation();
+                        grid.getModel().activation();
                         grid.repaint();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
