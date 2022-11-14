@@ -1,21 +1,14 @@
-package Grid;
+package View;
 
-import Model.Model;
+import Model.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Grid extends Canvas {
 
-    private double width;
-    private double height;
-    private double colCount;
-    private double rowCount;
+    private final int width, height, colCount, rowCount;
     private Model model;
-    private Visitor paintingVisitor = new PaintingVisitor();
 
     public Grid(int width, int height, int colCount, int rowCount) {
         super(width, height);
@@ -31,7 +24,7 @@ public class Grid extends Canvas {
 
     public void restart(MouseEvent mouseEvent) {
         model = new Model(this);
-        model.initialisation(3, 6);
+        model.initialisation(3, 8);
         getGraphicsContext2D().clearRect(0, 0, width, height);
         repaint();
     }
@@ -39,12 +32,9 @@ public class Grid extends Canvas {
     private void mousePressed(MouseEvent mouseEvent) {
         model.activation();
         repaint();
-    }
-
-    public void activation () {
-        for (Element element : model.getElements()) {
-            element.accept(paintingVisitor);
-        }
+            /*double x = mouseEvent.getX();
+            double y = mouseEvent.getY();
+            model.click((int)x*rowCount/height,(int)y*colCount/width);*/
     }
 
     public void repaint() {
@@ -52,30 +42,21 @@ public class Grid extends Canvas {
             getGraphicsContext2D().strokeLine(0, col * width / colCount, height, col * width / colCount);
         for (int row = 0; row < rowCount; row++)
             getGraphicsContext2D().strokeLine(row * height / rowCount, 0, row * height / rowCount, width);
-        for (Element element : elements) {
-            element.accept(paintingVisitor);
-        }
     }
 
-    public void addElement(Element element) {
-        elements.add(element);
-    }
-
-    //**********************GETTERS**************************//
-
-    public double getGridWidth() {
+    public int getGridWidth() {
         return width;
     }
 
-    public double getGridHeight() {
+    public int getGridHeight() {
         return height;
     }
 
-    public double getColCount() {
+    public int getColCount() {
         return colCount;
     }
 
-    public double getRowCount() {
+    public int getRowCount() {
         return rowCount;
     }
 
