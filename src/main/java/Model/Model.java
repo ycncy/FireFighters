@@ -55,13 +55,13 @@ public class Model {
     }
 
     private List<Position> activateFire(Position position) {
-        return next(position);
+        return position.next(position, rowCount, colCount);
     }
 
     private Position activateFirefighter(Position position) {
         Position randomPosition = aStepTowardFire(position);
         //next(position).get((int) (Math.random()*next(position).size()));
-        List<Position> nextFires = next(randomPosition).stream().filter(fires::contains).toList();
+        List<Position> nextFires = position.next(randomPosition, rowCount, colCount).stream().filter(fires::contains).toList();
         extinguish(randomPosition);
         for (Position fire : nextFires)
             extinguish(fire);
@@ -73,6 +73,7 @@ public class Model {
         paintingVisitor.visitEmptyBox(new EmptyBox(new Position(position.row(), position.col())));
     }
 
+    /*
     private List<Position> next(Position position) {
         List<Position> list = new ArrayList<>();
         if (position.row() > 0) list.add(new Position(position.row() - 1, position.col()));
@@ -80,20 +81,23 @@ public class Model {
         if (position.row() < rowCount - 1) list.add(new Position(position.row() + 1, position.col()));
         if (position.col() < colCount - 1) list.add(new Position(position.row(), position.col() + 1));
         return list;
-    }
+    }*/
 
     private Position aStepTowardFire(Position position) {
         Queue<Position> toVisit = new LinkedList<>();
         Set<Position> seen = new HashSet<>();
         HashMap<Position, Position> firstMove = new HashMap<>();
-        toVisit.addAll(next(position));
+        toVisit.addAll(position.next(position, rowCount, colCount));
+
         for (Position initialMove : toVisit)
             firstMove.put(initialMove, initialMove);
+
         while (!toVisit.isEmpty()) {
             Position current = toVisit.poll();
-            if (fires.contains(current))
-                return firstMove.get(current);
-            for (Position adjacent : next(current)) {
+
+            if (fires.contains(current)) return firstMove.get(current);
+
+            for (Position adjacent : position.next(current, rowCount, colCount)) {
                 if (seen.contains(adjacent)) continue;
                 toVisit.add(adjacent);
                 seen.add(adjacent);

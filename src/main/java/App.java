@@ -7,10 +7,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import static java.lang.Thread.sleep;
 
 
 public class App extends Application {
+
+    boolean isInPause = true;
 
     public static void main(String[] args) {
         launch(args);
@@ -32,6 +37,17 @@ public class App extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         grid.repaint();
+
+        ScheduledThreadPoolExecutor threadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+        threadPoolExecutor.scheduleAtFixedRate(() -> {
+            if(!isInPause) {
+                grid.getModel().activation();
+                grid.repaint();
+            }
+        }, 0, 50 , TimeUnit.MILLISECONDS);
+
+
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -46,7 +62,7 @@ public class App extends Application {
                 }
 
             }
-        }).start();
+        }).start();*/
     }
 }
 
