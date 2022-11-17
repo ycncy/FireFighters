@@ -21,7 +21,7 @@ public class ActivationVisitor implements Visitor {
     @Override
     public void visitFireFighter(FireFighter fireFighter) {
         Position randomPosition = model.fireManager.aStepTowardFire(fireFighter.getPosition());
-        List<Position> nextFires = fireFighter.getPosition().next(randomPosition, model.rowCount, model.colCount);
+        List<Position> nextFires = randomPosition.next(randomPosition, model.rowCount, model.colCount).stream().filter(model.fireManager.fires::contains).toList();
         model.fireManager.extinguish(randomPosition);
         for (Position fire : nextFires) {
             model.fireManager.extinguish(fire);

@@ -1,6 +1,7 @@
 package View;
 
 import Model.*;
+import Util.Position;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -9,6 +10,7 @@ public class Grid extends Canvas {
 
     private final int width, height, colCount, rowCount;
     private Model model;
+    private Visitor paintingVisitor;
 
     public Grid(int width, int height, int colCount, int rowCount) {
         super(width, height);
@@ -16,6 +18,7 @@ public class Grid extends Canvas {
         this.height = height;
         this.colCount = colCount;
         this.rowCount = rowCount;
+        paintingVisitor = new PaintingVisitor(this);
         setFocusTraversable(true);
         setOnMousePressed(this::mousePressed);
         model = new Model(this);
@@ -30,6 +33,7 @@ public class Grid extends Canvas {
     }
 
     private void mousePressed(MouseEvent mouseEvent) {
+        System.out.println(model.fireManager.fires.size());
         model.activation();
         repaint();
             /*double x = mouseEvent.getX();
@@ -38,6 +42,8 @@ public class Grid extends Canvas {
     }
 
     public void repaint() {
+        for (Position position : model.fireManager.fires) paintingVisitor.visitFire(new Fire(position));
+        for (Position position : model.firefighters) paintingVisitor.visitFireFighter(new FireFighter(position));
         for (int col = 0; col < colCount; col++)
             getGraphicsContext2D().strokeLine(0, col * width / colCount, height, col * width / colCount);
         for (int row = 0; row < rowCount; row++)

@@ -8,7 +8,7 @@ public class FireManager {
 
     Model model;
     List<Position> fireNewPositions;
-    Set<Position> fires = new HashSet<>();
+    public Set<Position> fires = new HashSet<>();
 
     public FireManager (Model model) {
         this.model = model;
