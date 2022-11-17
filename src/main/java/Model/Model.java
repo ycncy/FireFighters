@@ -12,6 +12,7 @@ public class Model {
     List<Position> firefighters = new ArrayList<>();
     List<Position> ffNewPositions;
     Visitor paintingVisitor;
+    Visitor activationVisitor;
     int step = 0;
 
     public Model(Grid grid) {
@@ -20,6 +21,7 @@ public class Model {
         colCount = grid.getColCount();
         rowCount = grid.getRowCount();
         paintingVisitor = new PaintingVisitor(grid);
+        activationVisitor = new ActivationVisitor(this);
     }
 
     public void initialisation(int fireNumber, int fireFighterNumber) {
@@ -36,20 +38,24 @@ public class Model {
     public void activation() {
         ffNewPositions = new ArrayList<>();
         for (Position ff : firefighters) {
-            Position newPosition = activateFirefighter(ff);
+            FireFighter fireFighter = new FireFighter(ff);
+            fireFighter.accept(activationVisitor);
             paintingVisitor.visitEmptyBox(new EmptyBox(new Position(ff.row(), ff.col())));
-            paintingVisitor.visitFireFighter(new FireFighter(new Position(newPosition.row(), newPosition.col())));
-            ffNewPositions.add(newPosition);
+        }
+        for (Position ff : ffNewPositions) {
+            paintingVisitor.visitFireFighter(new FireFighter(new Position(ff.row(), ff.col())));
         }
         firefighters = ffNewPositions;
         if (step % 2 == 0) {
-            List<Position> newFires = new ArrayList<>();
+            fireManager.fireNewPositions = new ArrayList<>();
             for (Position fire : fireManager.fires) {
-                newFires.addAll(activateFire(fire));
+                Fire newFire = new Fire(fire);
+                newFire.accept(activationVisitor);
             }
-            for (Position newFire : newFires)
-                paintingVisitor.visitFire(new Fire(new Position(newFire.row(), newFire.col())));
-            fireManager.fires.addAll(newFires);
+            for (Position fire : fireManager.fireNewPositions) {
+                paintingVisitor.visitFire(new Fire(new Position(fire.row(), fire.col())));
+            }
+            fireManager.fires.addAll(fireManager.fireNewPositions);
         }
         step++;
     }

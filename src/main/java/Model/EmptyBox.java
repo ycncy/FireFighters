@@ -1,10 +1,7 @@
 package Model;
 
 import Util.Position;
-import View.Grid;
-
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class EmptyBox implements Entity {
 

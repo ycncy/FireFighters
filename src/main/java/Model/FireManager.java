@@ -1,14 +1,13 @@
 package Model;
 
 import Util.Position;
-import View.Grid;
-import View.PaintingVisitor;
 
 import java.util.*;
 
 public class FireManager {
 
     Model model;
+    List<Position> fireNewPositions;
     Set<Position> fires = new HashSet<>();
 
     public FireManager (Model model) {

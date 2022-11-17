@@ -25,6 +25,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws InterruptedException {
         Group root = new Group();
         Button restart = new Button("Restart");
+        Button switchPause = new Button("Pause");
         VBox buttons = new VBox();
         HBox total = new HBox();
         Grid grid = new Grid(650,650,20,20);
@@ -33,7 +34,9 @@ public class App extends Application {
         total.getChildren().add(buttons);
         total.getChildren().add(grid);
         buttons.getChildren().add(restart);
+        buttons.getChildren().add(switchPause);
         restart.setOnMouseClicked(grid::restart);
+        switchPause.setOnMouseClicked((value)->isInPause = !isInPause);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         grid.repaint();
@@ -45,6 +48,7 @@ public class App extends Application {
                 grid.repaint();
             }
         }, 0, 50 , TimeUnit.MILLISECONDS);
+
 
 
         /*
