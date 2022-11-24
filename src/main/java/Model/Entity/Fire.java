@@ -1,8 +1,7 @@
-package Model;
+package Model.Entity;
 
+import View.Visitor;
 import Util.Position;
-
-import java.util.List;
 
 public class Fire extends Entity {
 

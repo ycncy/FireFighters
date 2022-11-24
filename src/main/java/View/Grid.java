@@ -1,16 +1,18 @@
 package View;
 
 import Model.*;
+import Model.Entity.EmptyBox;
+import Model.Entity.Fire;
+import Model.Entity.FireFighter;
 import Util.Position;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 public class Grid extends Canvas {
 
     private final int width, height, colCount, rowCount;
     private Model model;
-    private Visitor paintingVisitor;
+    private final Visitor paintingVisitor;
 
     public Grid(int width, int height, int colCount, int rowCount) {
         super(width, height);
@@ -21,14 +23,15 @@ public class Grid extends Canvas {
         paintingVisitor = new PaintingVisitor(this);
         setFocusTraversable(true);
         setOnMousePressed(this::mousePressed);
-        model = new Model(this);
-        model.initialisation(3, 8);
+
+        model = new Model(rowCount, colCount);
+        model.initialisation();
 
     }
 
     public void restart(MouseEvent mouseEvent) {
-        model = new Model(this);
-        model.initialisation(3, 8);
+        model = new Model(rowCount, colCount);
+        model.initialisation();
         getGraphicsContext2D().clearRect(0, 0, width, height);
         repaint();
     }
@@ -43,12 +46,10 @@ public class Grid extends Canvas {
 
     public void repaint() {
         for (int col = 0; col < colCount; col++) for (int row = 0; row < rowCount; row++) paintingVisitor.visitEmptyBox(new EmptyBox(new Position(row, col)));
-        for (Position position : model.fireManager.fires) paintingVisitor.visitFire(new Fire(position));
-        for (Position position : model.firefighters) paintingVisitor.visitFireFighter(new FireFighter(position));
-        for (int col = 0; col < colCount; col++)
-            getGraphicsContext2D().strokeLine(0, col * width / colCount, height, col * width / colCount);
-        for (int row = 0; row < rowCount; row++)
-            getGraphicsContext2D().strokeLine(row * height / rowCount, 0, row * height / rowCount, width);
+        for (Fire fire : model.fireManager.fires) fire.accept(paintingVisitor);
+        for (FireFighter fireFighter : model.fireFighterManager.fireFighters) fireFighter.accept(paintingVisitor);
+        for (int col = 0; col < colCount; col++) getGraphicsContext2D().strokeLine(0, col * width / colCount, height, col * width / colCount);
+        for (int row = 0; row < rowCount; row++) getGraphicsContext2D().strokeLine(row * height / rowCount, 0, row * height / rowCount, width);
     }
 
     public int getGridWidth() {

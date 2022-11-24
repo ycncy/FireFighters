@@ -1,58 +1,29 @@
 package Model;
 
-import Util.Position;
-import View.*;
-import java.util.*;
+import Model.Manager.FireFighterManager;
+import Model.Manager.FireManager;
 
 public class Model {
 
-    Grid grid;
-    public FireManager fireManager;
     int colCount, rowCount;
-    public List<Position> firefighters = new ArrayList<>();
-    public List<Position> ffNewPositions;
-    Visitor paintingVisitor;
-    Visitor activationVisitor;
-    int step = 0;
 
-    public Model(Grid grid) {
-        this.grid = grid;
-        this.fireManager = new FireManager(this);
-        colCount = grid.getColCount();
-        rowCount = grid.getRowCount();
-        paintingVisitor = new PaintingVisitor(grid);
-        activationVisitor = new ActivationVisitor(this);
+    public FireManager fireManager;
+    public FireFighterManager fireFighterManager;
+
+    public Model(int rowCount, int colCount) {
+        this.fireManager = new FireManager(3);
+        this.fireFighterManager = new FireFighterManager(8, fireManager);
+        this.colCount = colCount;
+        this.rowCount = rowCount;
     }
 
-    public void initialisation(int fireNumber, int fireFighterNumber) {
-        for (int index = 0; index < fireNumber; index++)
-            fireManager.fires.add(randomPosition());
-        for (int index = 0; index < fireFighterNumber; index++)
-            firefighters.add(randomPosition());
-    }
-
-    private Position randomPosition() {
-        return new Position((int) (Math.random() * rowCount), (int) (Math.random() * colCount));
+    public void initialisation() {
+        fireManager.initialize(rowCount, colCount);
+        fireFighterManager.initialize(rowCount, colCount);
     }
 
     public void activation() {
-        ffNewPositions = new ArrayList<>();
-        for (Position ff : firefighters) {
-            FireFighter fireFighter = new FireFighter(ff);
-            paintingVisitor.visitEmptyBox(new EmptyBox(ff));
-            fireFighter.accept(activationVisitor);
-        }
-        firefighters = ffNewPositions;
-        if (step % 2 == 0) {
-            fireManager.fireNewPositions = new ArrayList<>();
-            for (Position fire : fireManager.fires) {
-                Fire newFire = new Fire(fire);
-                newFire.accept(activationVisitor);
-            }
-            fireManager.fires.addAll(fireManager.fireNewPositions);
-        }
-        step++;
+        fireManager.update(rowCount, colCount);
+        fireFighterManager.update(rowCount, colCount);
     }
-
-
 }

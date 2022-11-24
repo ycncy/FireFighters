@@ -1,8 +1,8 @@
-package Model;
+package View;
 
-import Model.EmptyBox;
-import Model.Fire;
-import Model.FireFighter;
+import Model.Entity.EmptyBox;
+import Model.Entity.Fire;
+import Model.Entity.FireFighter;
 
 public interface Visitor {
 

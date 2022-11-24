@@ -1,9 +1,7 @@
-package Model;
+package Model.Entity;
 
+import View.Visitor;
 import Util.*;
-import View.*;
-
-import java.util.*;
 
 public class FireFighter extends Entity {
 
