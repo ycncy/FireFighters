@@ -3,7 +3,7 @@ package Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public record Position(int row, int col ) {
+public record Position (int row, int col) {
 
     public List<Position> next(Position position, int rowCount, int colCount) {
         List<Position> list = new ArrayList<>();

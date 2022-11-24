@@ -14,10 +14,6 @@ public class PaintingVisitor implements Visitor {
         this.grid = grid;
     }
 
-    public Grid getVisitorGrid() {
-        return grid;
-    }
-
     @Override
     public void visitEmptyBox(EmptyBox emptyBox) {
         grid.getGraphicsContext2D().setFill(Color.WHITE);

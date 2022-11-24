@@ -23,6 +23,7 @@ public class Grid extends Canvas {
         setOnMousePressed(this::mousePressed);
         model = new Model(this);
         model.initialisation(3, 8);
+
     }
 
     public void restart(MouseEvent mouseEvent) {
@@ -33,7 +34,6 @@ public class Grid extends Canvas {
     }
 
     private void mousePressed(MouseEvent mouseEvent) {
-        System.out.println(model.fireManager.fires.size());
         model.activation();
         repaint();
             /*double x = mouseEvent.getX();
@@ -42,6 +42,7 @@ public class Grid extends Canvas {
     }
 
     public void repaint() {
+        for (int col = 0; col < colCount; col++) for (int row = 0; row < rowCount; row++) paintingVisitor.visitEmptyBox(new EmptyBox(new Position(row, col)));
         for (Position position : model.fireManager.fires) paintingVisitor.visitFire(new Fire(position));
         for (Position position : model.firefighters) paintingVisitor.visitFireFighter(new FireFighter(position));
         for (int col = 0; col < colCount; col++)

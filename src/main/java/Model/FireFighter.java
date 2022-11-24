@@ -5,21 +5,14 @@ import View.*;
 
 import java.util.*;
 
-public class FireFighter implements Entity {
-
-    private Position position;
+public class FireFighter extends Entity {
 
     public FireFighter (Position position) {
-        this.position = position;
+        super(position);
     }
 
     @Override
     public void accept(Visitor visitor) {
         visitor.visitFireFighter(this);
-    }
-
-    @Override
-    public Position getPosition() {
-        return position;
     }
 }

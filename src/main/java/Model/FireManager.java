@@ -4,7 +4,7 @@ import Util.Position;
 
 import java.util.*;
 
-public class FireManager {
+public class FireManager implements Manager {
 
     Model model;
     List<Position> fireNewPositions;
@@ -16,7 +16,6 @@ public class FireManager {
 
     public void extinguish(Position position) {
         fires.remove(position);
-        model.paintingVisitor.visitEmptyBox(new EmptyBox(new Position(position.row(), position.col())));
     }
 
     public Position aStepTowardFire(Position position) {
@@ -41,5 +40,15 @@ public class FireManager {
             }
         }
         return position;
+    }
+
+    @Override
+    public void initialize() {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }

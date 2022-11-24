@@ -3,8 +3,32 @@ package Model;
 import Util.Position;
 import java.util.List;
 
-public interface Entity {
+public abstract class Entity {
 
-    void accept (Visitor visitor);
-    Position getPosition ();
+    protected Position position;
+
+    public Entity(Position position) {
+        this.position = position;
+    }
+
+    abstract void accept (Visitor visitor);
+
+    public Position getPosition () {
+        return position;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Entity entity = (Entity) o;
+
+        return position != null ? position.equals(entity.position) : entity.position == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return position != null ? position.hashCode() : 0;
+    }
 }

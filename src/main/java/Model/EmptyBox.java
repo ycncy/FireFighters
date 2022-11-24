@@ -3,21 +3,14 @@ package Model;
 import Util.Position;
 import java.util.List;
 
-public class EmptyBox implements Entity {
-
-    private Position position;
+public class EmptyBox extends Entity {
 
     public EmptyBox (Position position) {
-        this.position = position;
+        super(position);
     }
 
     @Override
     public void accept(Visitor visitor) {
         visitor.visitEmptyBox(this);
-    }
-
-    @Override
-    public Position getPosition() {
-        return position;
     }
 }
