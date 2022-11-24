@@ -1,10 +1,7 @@
 package Model.Entity;
 
-import Model.Manager.FireManager;
 import View.Visitor;
 import Util.Position;
-
-import java.util.*;
 
 public abstract class Entity {
 
@@ -15,34 +12,6 @@ public abstract class Entity {
     }
 
     abstract void accept (Visitor visitor);
-
-    public void extinguish (Fire fire, FireManager fireManager) {
-        fireManager.removeFire(fire);
-    }
-
-    public Position aStepTowardFire (Position position, FireManager fireManager, int rowCount, int colCount) {
-        Queue<Position> toVisit = new LinkedList<>();
-        Set<Position> seen = new HashSet<>();
-        HashMap<Position, Position> firstMove = new HashMap<>();
-        toVisit.addAll(position.next(rowCount, colCount));
-
-        for (Position initialMove : toVisit)
-            firstMove.put(initialMove, initialMove);
-
-        while (!toVisit.isEmpty()) {
-            Position current = toVisit.poll();
-
-            if (fireManager.containsFire(current) != null) return firstMove.get(current);
-
-            for (Position adjacent : current.next(rowCount, colCount)) {
-                if (seen.contains(adjacent)) continue;
-                toVisit.add(adjacent);
-                seen.add(adjacent);
-                firstMove.put(adjacent, firstMove.get(current));
-            }
-        }
-        return position;
-    }
 
     public Position getPosition () {
         return position;

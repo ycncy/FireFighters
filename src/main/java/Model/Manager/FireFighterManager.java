@@ -7,7 +7,7 @@ import java.util.*;
 
 public class FireFighterManager extends Manager {
 
-    private final FireManager fireManager;
+    private final Extinguisher fireManager;
 
     public List<FireFighter> fireFighters = new ArrayList<>();
 
@@ -23,11 +23,11 @@ public class FireFighterManager extends Manager {
     public void update(int rowCount, int colCount) {
         List<FireFighter> fireFightersNewPositions = new ArrayList<>();
         for (FireFighter fireFighter : fireFighters) {
-            Position randomPosition = fireFighter.aStepTowardFire(fireFighter.getPosition(), fireManager, rowCount, colCount);
+            Position randomPosition = fireManager.aStepTowardFire(fireFighter.getPosition(), rowCount, colCount);
             List<Position> nextFires = randomPosition.next(rowCount, colCount);
-            fireFighter.extinguish(fireManager.containsFire(randomPosition), fireManager);
+            fireManager.extinguish(fireManager.containsFire(randomPosition));
             for (Position fire : nextFires) {
-                fireFighter.extinguish(fireManager.containsFire(fire), fireManager);
+                fireManager.extinguish(fireManager.containsFire(fire));
             }
             fireFightersNewPositions.add(new FireFighter(randomPosition));
         }
