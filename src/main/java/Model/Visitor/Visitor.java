@@ -1,12 +1,12 @@
-package View;
+package Model.Visitor;
 
-import Model.Entity.EmptyBox;
-import Model.Entity.Fire;
-import Model.Entity.FireFighter;
+import Model.Entity.*;
 
 public interface Visitor {
 
     void visitEmptyBox (EmptyBox emptyBox);
     void visitFireFighter (FireFighter fireFighter);
     void visitFire (Fire fire);
+    void visitCloud (Cloud cloud);
+    void visitMotorizedFireFighter(MotorizedFireFighter motorizedFireFighter);
 }

@@ -1,6 +1,6 @@
 package Model.Entity;
 
-import View.Visitor;
+import Model.Visitor.Visitor;
 import Util.Position;
 
 public abstract class Entity {

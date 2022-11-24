@@ -6,13 +6,13 @@ import java.util.*;
 
 public class FireFighterManager extends Manager {
 
-    private final Extinguisher fireManager;
+    private final Extinguisher extinguisher;
 
     public List<FireFighter> fireFighters = new ArrayList<>();
 
-    public FireFighterManager (int amount, FireManager fireManager) {
+    public FireFighterManager (int amount, FireManager extinguisher) {
         super(amount);
-        this.fireManager = fireManager;
+        this.extinguisher = extinguisher;
     }
 
     @Override
@@ -24,11 +24,11 @@ public class FireFighterManager extends Manager {
     public void update(int rowCount, int colCount) {
         List<FireFighter> fireFightersNewPositions = new ArrayList<>();
         for (FireFighter fireFighter : fireFighters) {
-            Position randomPosition = fireManager.aStepTowardFire(fireFighter.getPosition(), rowCount, colCount);
+            Position randomPosition = extinguisher.aStepTowardFire(fireFighter.getPosition(), rowCount, colCount);
             List<Position> nextFires = randomPosition.next(rowCount, colCount);
-            fireManager.extinguishFire(fireManager.containsFire(randomPosition));
+            extinguisher.extinguishFire(extinguisher.containsFire(randomPosition));
             for (Position fire : nextFires) {
-                fireManager.extinguishFire(fireManager.containsFire(fire));
+                extinguisher.extinguishFire(extinguisher.containsFire(fire));
             }
             fireFightersNewPositions.add(new FireFighter(randomPosition));
 

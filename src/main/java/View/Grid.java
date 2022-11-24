@@ -3,6 +3,8 @@ package View;
 import Model.*;
 import Model.Entity.*;
 import Model.Manager.*;
+import Model.Visitor.PaintingVisitor;
+import Model.Visitor.Visitor;
 import Util.Position;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -27,16 +29,21 @@ public class Grid extends Canvas {
         paintingVisitor = new PaintingVisitor(this);
 
         FireManager fireManager = new FireManager(3);
-        FireFighterManager fireFighterManager = new FireFighterManager(8, fireManager);
+        FireFighterManager fireFighterManager = new FireFighterManager(3, fireManager);
+        CloudManager cloudManager = new CloudManager(2, fireManager);
+        MotorizedFireFighterManager motorizedFireFighterManager = new MotorizedFireFighterManager(2, fireManager);
 
-        model = new Model(rowCount, colCount, fireManager, fireFighterManager);
+        model = new Model(rowCount, colCount, fireManager, fireFighterManager, cloudManager, motorizedFireFighterManager);
         model.initialisation();
     }
 
     public void restart(MouseEvent mouseEvent) {
         FireManager fireManager = new FireManager(3);
-        FireFighterManager fireFighterManager = new FireFighterManager(8, fireManager);
-        model = new Model(rowCount, colCount, fireManager, fireFighterManager);
+        FireFighterManager fireFighterManager = new FireFighterManager(3, fireManager);
+        CloudManager cloudManager = new CloudManager(2, fireManager);
+        MotorizedFireFighterManager motorizedFireFighterManager = new MotorizedFireFighterManager(2, fireManager);
+
+        model = new Model(rowCount, colCount, fireManager, fireFighterManager, cloudManager, motorizedFireFighterManager);
         model.initialisation();
         repaint();
     }
@@ -44,9 +51,6 @@ public class Grid extends Canvas {
     private void mousePressed(MouseEvent mouseEvent) {
         model.activation();
         repaint();
-            /*double x = mouseEvent.getX();
-            double y = mouseEvent.getY();
-            model.click((int)x*rowCount/height,(int)y*colCount/width);*/
     }
 
     public void repaint() {

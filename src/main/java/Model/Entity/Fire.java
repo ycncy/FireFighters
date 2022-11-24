@@ -1,11 +1,11 @@
 package Model.Entity;
 
-import View.Visitor;
+import Model.Visitor.Visitor;
 import Util.Position;
 
 public class Fire extends Entity {
 
-    public Fire (Position position) {
+    public Fire(Position position) {
         super(position);
     }
 

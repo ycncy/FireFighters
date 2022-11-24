@@ -1,8 +1,8 @@
-package View;
+package Model.Visitor;
 
-import Model.Entity.EmptyBox;
-import Model.Entity.Fire;
-import Model.Entity.FireFighter;
+import Model.Entity.*;
+import Model.Visitor.Visitor;
+import View.Grid;
 import javafx.scene.paint.Color;
 
 public class PaintingVisitor implements Visitor {
@@ -39,4 +39,24 @@ public class PaintingVisitor implements Visitor {
                 grid.getGridHeight() / grid.getRowCount(),
                 grid.getGridWidth() / grid.getColCount());
     }
+
+    @Override
+    public void visitCloud(Cloud cloud) {
+        grid.getGraphicsContext2D().setFill(Color.DARKGRAY);
+        grid.getGraphicsContext2D().fillRect(cloud.getPosition().row() * grid.getGridHeight() / grid.getRowCount(),
+                cloud.getPosition().col() * grid.getGridWidth() / grid.getColCount(),
+                grid.getGridHeight() / grid.getRowCount(),
+                grid.getGridWidth() / grid.getColCount());
+    }
+
+    @Override
+    public void visitMotorizedFireFighter(MotorizedFireFighter motorizedFireFighter) {
+        grid.getGraphicsContext2D().setFill(Color.BLACK);
+        grid.getGraphicsContext2D().fillRect(motorizedFireFighter.getPosition().row() * grid.getGridHeight() / grid.getRowCount(),
+                motorizedFireFighter.getPosition().col() * grid.getGridWidth() / grid.getColCount(),
+                grid.getGridHeight() / grid.getRowCount(),
+                grid.getGridWidth() / grid.getColCount());
+    }
+
+
 }
