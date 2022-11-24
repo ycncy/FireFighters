@@ -1,13 +1,8 @@
 package View;
 
 import Model.*;
-import Model.Entity.EmptyBox;
-import Model.Entity.Entity;
-import Model.Entity.Fire;
-import Model.Entity.FireFighter;
-import Model.Manager.FireFighterManager;
-import Model.Manager.FireManager;
-import Model.Manager.Manager;
+import Model.Entity.*;
+import Model.Manager.*;
 import Util.Position;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 public class Grid extends Canvas {
 
     private final int width, height, colCount, rowCount;
+
     private Model model;
     private final Visitor paintingVisitor;
 
@@ -24,22 +20,24 @@ public class Grid extends Canvas {
         this.height = height;
         this.colCount = colCount;
         this.rowCount = rowCount;
-        paintingVisitor = new PaintingVisitor(this);
+
         setFocusTraversable(true);
         setOnMousePressed(this::mousePressed);
+
+        paintingVisitor = new PaintingVisitor(this);
 
         FireManager fireManager = new FireManager(3);
         FireFighterManager fireFighterManager = new FireFighterManager(8, fireManager);
 
         model = new Model(rowCount, colCount, fireManager, fireFighterManager);
         model.initialisation();
-
     }
 
     public void restart(MouseEvent mouseEvent) {
-        model = new Model(rowCount, colCount);
+        FireManager fireManager = new FireManager(3);
+        FireFighterManager fireFighterManager = new FireFighterManager(8, fireManager);
+        model = new Model(rowCount, colCount, fireManager, fireFighterManager);
         model.initialisation();
-        getGraphicsContext2D().clearRect(0, 0, width, height);
         repaint();
     }
 

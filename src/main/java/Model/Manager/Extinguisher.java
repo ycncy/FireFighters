@@ -6,6 +6,6 @@ import Util.Position;
 public interface Extinguisher {
 
     Fire containsFire(Position position);
-    void extinguish (Fire fire);
+    void extinguishFire(Fire fire);
     Position aStepTowardFire (Position position, int rowCount, int colCount);
 }

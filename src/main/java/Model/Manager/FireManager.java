@@ -48,7 +48,7 @@ public class FireManager extends Manager implements Extinguisher{
     }
 
     @Override
-    public void extinguish (Fire fire) {
+    public void extinguishFire (Fire fire) {
         fires.remove(fire);
     }
 

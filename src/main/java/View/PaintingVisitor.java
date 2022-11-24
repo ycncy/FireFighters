@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 public class PaintingVisitor implements Visitor {
 
-    private Grid grid;
+    private final Grid grid;
 
     public PaintingVisitor(Grid grid) {
         this.grid = grid;

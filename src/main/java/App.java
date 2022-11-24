@@ -48,25 +48,6 @@ public class App extends Application {
                 grid.repaint();
             }
         }, 0, 50 , TimeUnit.MILLISECONDS);
-
-
-
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    try {
-                        sleep(50);
-                        grid.getModel().activation();
-                        grid.repaint();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        }).start();*/
     }
 }
 

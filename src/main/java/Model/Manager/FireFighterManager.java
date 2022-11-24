@@ -26,11 +26,12 @@ public class FireFighterManager extends Manager {
         for (FireFighter fireFighter : fireFighters) {
             Position randomPosition = fireManager.aStepTowardFire(fireFighter.getPosition(), rowCount, colCount);
             List<Position> nextFires = randomPosition.next(rowCount, colCount);
-            fireManager.extinguish(fireManager.containsFire(randomPosition));
+            fireManager.extinguishFire(fireManager.containsFire(randomPosition));
             for (Position fire : nextFires) {
-                fireManager.extinguish(fireManager.containsFire(fire));
+                fireManager.extinguishFire(fireManager.containsFire(fire));
             }
             fireFightersNewPositions.add(new FireFighter(randomPosition));
+
         }
         fireFighters = fireFightersNewPositions;
     }
