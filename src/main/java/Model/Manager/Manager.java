@@ -1,6 +1,9 @@
 package Model.Manager;
 
+import Model.Entity.Entity;
 import Util.Position;
+
+import java.util.Set;
 
 public abstract class Manager {
 
@@ -14,6 +17,7 @@ public abstract class Manager {
         return new Position((int) (Math.random() * rowCount), (int) (Math.random() * colCount));
     }
 
-    abstract void initialize (int rowCount, int colCount);
-    abstract void update (int rowCount, int colCount);
+    public abstract Set<Entity> getEntities ();
+    public abstract void initialize (int rowCount, int colCount);
+    public abstract void update (int rowCount, int colCount);
 }

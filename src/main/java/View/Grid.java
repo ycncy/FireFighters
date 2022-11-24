@@ -2,8 +2,12 @@ package View;
 
 import Model.*;
 import Model.Entity.EmptyBox;
+import Model.Entity.Entity;
 import Model.Entity.Fire;
 import Model.Entity.FireFighter;
+import Model.Manager.FireFighterManager;
+import Model.Manager.FireManager;
+import Model.Manager.Manager;
 import Util.Position;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +28,10 @@ public class Grid extends Canvas {
         setFocusTraversable(true);
         setOnMousePressed(this::mousePressed);
 
-        model = new Model(rowCount, colCount);
+        FireManager fireManager = new FireManager(3);
+        FireFighterManager fireFighterManager = new FireFighterManager(8, fireManager);
+
+        model = new Model(rowCount, colCount, fireManager, fireFighterManager);
         model.initialisation();
 
     }
@@ -46,8 +53,8 @@ public class Grid extends Canvas {
 
     public void repaint() {
         for (int col = 0; col < colCount; col++) for (int row = 0; row < rowCount; row++) paintingVisitor.visitEmptyBox(new EmptyBox(new Position(row, col)));
-        for (Fire fire : model.fireManager.fires) fire.accept(paintingVisitor);
-        for (FireFighter fireFighter : model.fireFighterManager.fireFighters) fireFighter.accept(paintingVisitor);
+        for (Manager manager : model.managers) for (Entity entity : manager.getEntities()) entity.accept (paintingVisitor);
+
         for (int col = 0; col < colCount; col++) getGraphicsContext2D().strokeLine(0, col * width / colCount, height, col * width / colCount);
         for (int row = 0; row < rowCount; row++) getGraphicsContext2D().strokeLine(row * height / rowCount, 0, row * height / rowCount, width);
     }

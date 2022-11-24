@@ -1,29 +1,25 @@
 package Model;
 
-import Model.Manager.FireFighterManager;
-import Model.Manager.FireManager;
+import Model.Manager.*;
+import java.util.*;
 
 public class Model {
 
-    int colCount, rowCount;
+    private final int colCount, rowCount;
 
-    public FireManager fireManager;
-    public FireFighterManager fireFighterManager;
+    public List<Manager> managers = new ArrayList<>();
 
-    public Model(int rowCount, int colCount) {
-        this.fireManager = new FireManager(3);
-        this.fireFighterManager = new FireFighterManager(8, fireManager);
+    public Model(int rowCount, int colCount, Manager... managers) {
         this.colCount = colCount;
         this.rowCount = rowCount;
+        this.managers.addAll(List.of(managers));
     }
 
     public void initialisation() {
-        fireManager.initialize(rowCount, colCount);
-        fireFighterManager.initialize(rowCount, colCount);
+        for (Manager manager : managers) manager.initialize(rowCount, colCount);
     }
 
     public void activation() {
-        fireManager.update(rowCount, colCount);
-        fireFighterManager.update(rowCount, colCount);
+        for (Manager manager : managers) manager.update(rowCount, colCount);
     }
 }

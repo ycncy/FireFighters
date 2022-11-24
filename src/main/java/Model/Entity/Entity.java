@@ -11,7 +11,7 @@ public abstract class Entity {
         this.position = position;
     }
 
-    abstract void accept (Visitor visitor);
+    public abstract void accept(Visitor visitor);
 
     public Position getPosition () {
         return position;

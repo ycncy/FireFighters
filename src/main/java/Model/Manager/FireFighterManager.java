@@ -1,8 +1,7 @@
 package Model.Manager;
 
-import Model.Entity.FireFighter;
+import Model.Entity.*;
 import Util.Position;
-
 import java.util.*;
 
 public class FireFighterManager extends Manager {
@@ -16,10 +15,12 @@ public class FireFighterManager extends Manager {
         this.fireManager = fireManager;
     }
 
+    @Override
     public void initialize(int rowCount, int colCount) {
         for (int index = 0; index < amount; index++) fireFighters.add(new FireFighter(randomPosition(rowCount, colCount)));
     }
 
+    @Override
     public void update(int rowCount, int colCount) {
         List<FireFighter> fireFightersNewPositions = new ArrayList<>();
         for (FireFighter fireFighter : fireFighters) {
@@ -32,5 +33,10 @@ public class FireFighterManager extends Manager {
             fireFightersNewPositions.add(new FireFighter(randomPosition));
         }
         fireFighters = fireFightersNewPositions;
+    }
+
+    @Override
+    public Set<Entity> getEntities() {
+        return new HashSet<>(fireFighters);
     }
 }

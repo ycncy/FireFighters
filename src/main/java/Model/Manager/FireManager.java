@@ -1,5 +1,6 @@
 package Model.Manager;
 
+import Model.Entity.Entity;
 import Model.Entity.Fire;
 import Util.Position;
 
@@ -15,10 +16,12 @@ public class FireManager extends Manager implements Extinguisher{
         super(amount);
     }
 
+    @Override
     public void initialize(int rowCount, int colCount) {
         for (int index = 0; index < amount; index++) fires.add(new Fire(randomPosition(rowCount, colCount)));
     }
 
+    @Override
     public void update(int rowCount, int colCount) {
         if (step % 2 == 0) {
             Set<Fire> firesNewPositions = new HashSet<>();
@@ -31,6 +34,11 @@ public class FireManager extends Manager implements Extinguisher{
             fires.addAll(firesNewPositions);
         }
         step++;
+    }
+
+    @Override
+    public Set<Entity> getEntities() {
+        return new HashSet<>(fires);
     }
 
     @Override
