@@ -1,7 +1,8 @@
-package Model.Visitor;
+package View.PaintingVistor;
 
-import Model.Entity.*;
-import Model.Visitor.Visitor;
+import Model.Entity.Entities.*;
+import Model.Obstacle.Obstacles.Mountain;
+import Model.Obstacle.Obstacles.Road;
 import View.Grid;
 import javafx.scene.paint.Color;
 
@@ -25,7 +26,7 @@ public class PaintingVisitor implements Visitor {
     @Override
     public void visitFireFighter(FireFighter fireFighter) {
         grid.getGraphicsContext2D().setFill(Color.BLUE);
-        grid.getGraphicsContext2D().fillRect(fireFighter.getPosition().row() * grid.getGridHeight() / grid.getRowCount(),
+        grid.getGraphicsContext2D().fillOval(fireFighter.getPosition().row() * grid.getGridHeight() / grid.getRowCount(),
                 fireFighter.getPosition().col() * grid.getGridWidth() / grid.getColCount(),
                 grid.getGridHeight() / grid.getRowCount(),
                 grid.getGridWidth() / grid.getColCount());
@@ -52,11 +53,27 @@ public class PaintingVisitor implements Visitor {
     @Override
     public void visitMotorizedFireFighter(MotorizedFireFighter motorizedFireFighter) {
         grid.getGraphicsContext2D().setFill(Color.BLACK);
-        grid.getGraphicsContext2D().fillRect(motorizedFireFighter.getPosition().row() * grid.getGridHeight() / grid.getRowCount(),
+        grid.getGraphicsContext2D().fillOval(motorizedFireFighter.getPosition().row() * grid.getGridHeight() / grid.getRowCount(),
                 motorizedFireFighter.getPosition().col() * grid.getGridWidth() / grid.getColCount(),
                 grid.getGridHeight() / grid.getRowCount(),
                 grid.getGridWidth() / grid.getColCount());
     }
 
+    @Override
+    public void visitMountain(Mountain mountain) {
+        grid.getGraphicsContext2D().setFill(Color.BROWN);
+        grid.getGraphicsContext2D().fillRect(mountain.getPosition().row() * grid.getGridHeight() / grid.getRowCount(),
+                mountain.getPosition().col() * grid.getGridWidth() / grid.getColCount(),
+                grid.getGridHeight() / grid.getRowCount(),
+                grid.getGridWidth() / grid.getColCount());
+    }
 
+    @Override
+    public void visitRoad(Road road) {
+        grid.getGraphicsContext2D().setFill(Color.LIGHTBLUE);
+        grid.getGraphicsContext2D().fillRect(road.getPosition().row() * grid.getGridHeight() / grid.getRowCount(),
+                road.getPosition().col() * grid.getGridWidth() / grid.getColCount(),
+                grid.getGridHeight() / grid.getRowCount(),
+                grid.getGridWidth() / grid.getColCount());
+    }
 }

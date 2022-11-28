@@ -1,25 +1,48 @@
 package Model;
 
-import Model.Manager.*;
+import Model.Entity.Manager.*;
+import Model.Obstacle.Manager.*;
 import java.util.*;
 
 public class Model {
 
     private final int colCount, rowCount;
 
-    public List<Manager> managers = new ArrayList<>();
+    private final List<EntityManager> entityManagers = new ArrayList<>();
+    private final List<ObstacleManager> obstacleManagers = new ArrayList<>();
 
-    public Model(int rowCount, int colCount, Manager... managers) {
+    public Model(int rowCount, int colCount) {
         this.colCount = colCount;
         this.rowCount = rowCount;
-        this.managers.addAll(List.of(managers));
     }
 
-    public void initialisation() {
-        for (Manager manager : managers) manager.initialize(rowCount, colCount);
+    public void initializeEntities () {
+        for (EntityManager entityManager : entityManagers) entityManager.initialize(rowCount, colCount);
+
+    }
+
+    public void initializeObstacles () {
+        for (ObstacleManager obstacleManager : obstacleManagers) obstacleManager.initialize(rowCount, colCount);
+
     }
 
     public void activation() {
-        for (Manager manager : managers) manager.update(rowCount, colCount);
+        for (EntityManager entityManager : entityManagers) entityManager.update(rowCount, colCount);
+    }
+
+    public void addAllEntityManagers (EntityManager... entityManagers) {
+        this.entityManagers.addAll(List.of(entityManagers));
+    }
+
+    public void addAllObstacleManagers (ObstacleManager... obstacleManagers) {
+        this.obstacleManagers.addAll(List.of(obstacleManagers));
+    }
+
+    public List<EntityManager> getEntityManagers () {
+        return entityManagers;
+    }
+
+    public List<ObstacleManager> getObstacleManagers () {
+        return obstacleManagers;
     }
 }

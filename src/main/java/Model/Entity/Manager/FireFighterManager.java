@@ -1,23 +1,36 @@
-package Model.Manager;
+package Model.Entity.Manager;
 
 import Model.Entity.*;
+import Model.Entity.Entities.FireFighter;
+import Model.Visitor.ObstacleVisitor.ObstacleVisitor;
 import Util.Position;
 import java.util.*;
 
-public class FireFighterManager extends Manager {
+public class FireFighterManager extends EntityManager {
 
     private final Extinguisher extinguisher;
 
-    public List<FireFighter> fireFighters = new ArrayList<>();
+    private List<FireFighter> fireFighters = new ArrayList<>();
 
-    public FireFighterManager (int amount, FireManager extinguisher) {
-        super(amount);
+    public FireFighterManager(int amount, FireManager extinguisher, ObstacleVisitor... obstacleVisitors) {
+        super(amount, obstacleVisitors);
         this.extinguisher = extinguisher;
     }
 
     @Override
     public void initialize(int rowCount, int colCount) {
-        for (int index = 0; index < amount; index++) fireFighters.add(new FireFighter(randomPosition(rowCount, colCount)));
+        int count = 0;
+        whileloop:
+        while (count < amount) {
+            FireFighter fireFighter = new FireFighter(randomPosition(rowCount, colCount));
+            for (ObstacleVisitor obstacleVisitor : obstacleVisitors) {
+                if (!fireFighter.accept(obstacleVisitor, fireFighter.getPosition())) {
+                    continue whileloop;
+                }
+            }
+            fireFighters.add(fireFighter);
+            count++;
+        }
     }
 
     @Override
@@ -31,7 +44,6 @@ public class FireFighterManager extends Manager {
                 extinguisher.extinguishFire(extinguisher.containsFire(fire));
             }
             fireFightersNewPositions.add(new FireFighter(randomPosition));
-
         }
         fireFighters = fireFightersNewPositions;
     }

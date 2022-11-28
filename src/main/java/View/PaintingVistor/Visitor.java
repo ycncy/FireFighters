@@ -1,6 +1,8 @@
-package Model.Visitor;
+package View.PaintingVistor;
 
-import Model.Entity.*;
+import Model.Entity.Entities.*;
+import Model.Obstacle.Obstacles.Mountain;
+import Model.Obstacle.Obstacles.Road;
 
 public interface Visitor {
 
@@ -9,4 +11,6 @@ public interface Visitor {
     void visitFire (Fire fire);
     void visitCloud (Cloud cloud);
     void visitMotorizedFireFighter(MotorizedFireFighter motorizedFireFighter);
+    void visitMountain (Mountain mountain);
+    void visitRoad (Road road);
 }

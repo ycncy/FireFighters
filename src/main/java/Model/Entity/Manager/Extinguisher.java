@@ -1,6 +1,6 @@
-package Model.Manager;
+package Model.Entity.Manager;
 
-import Model.Entity.Fire;
+import Model.Entity.Entities.Fire;
 import Util.Position;
 
 public interface Extinguisher {

@@ -1,24 +1,38 @@
-package Model.Manager;
+package Model.Entity.Manager;
 
 import Model.Entity.*;
+import Model.Entity.Entities.FireFighter;
+import Model.Entity.Entities.MotorizedFireFighter;
+import Model.Visitor.ObstacleVisitor.ObstacleVisitor;
 import Util.Position;
 
 import java.util.*;
 
-public class MotorizedFireFighterManager extends Manager {
+public class MotorizedFireFighterManager extends EntityManager {
 
-    private Extinguisher extinguisher;
+    private final Extinguisher extinguisher;
 
     private List<MotorizedFireFighter> motorizedFireFighters = new ArrayList<>();
 
-    public MotorizedFireFighterManager(int amount, Extinguisher extinguisher) {
-        super(amount);
+    public MotorizedFireFighterManager(int amount, Extinguisher extinguisher, ObstacleVisitor... obstacleVisitors) {
+        super(amount, obstacleVisitors);
         this.extinguisher = extinguisher;
     }
 
     @Override
     public void initialize(int rowCount, int colCount) {
-        for (int index = 0; index < amount; index++) motorizedFireFighters.add(new MotorizedFireFighter(randomPosition(rowCount, colCount)));
+        int count = 0;
+        whileloop:
+        while (count < amount) {
+            MotorizedFireFighter motorizedFireFighter = new MotorizedFireFighter(randomPosition(rowCount, colCount));
+            for (ObstacleVisitor obstacleVisitor : obstacleVisitors) {
+                if (!motorizedFireFighter.accept(obstacleVisitor, motorizedFireFighter.getPosition())) {
+                    continue whileloop;
+                }
+            }
+            motorizedFireFighters.add(motorizedFireFighter);
+            count++;
+        }
     }
 
     @Override
