@@ -10,6 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import rockpaperscissors.view.RpsGrid;
+
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -31,7 +33,7 @@ public class App extends Application {
         Button switchPause = new Button("Pause");
         VBox buttons = new VBox();
         HBox total = new HBox();
-        Grid grid = new FireFightersGrid(650,650,20,20);
+        Grid grid = new RpsGrid(650,650,20,20);
 
         root.getChildren().add(total);
         total.getChildren().add(buttons);

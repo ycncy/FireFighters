@@ -10,7 +10,6 @@ public class Cloud extends Entity {
 
     public Cloud (Position position) {
         super(position);
-        this.image = new Image("C:\\Users\\talha\\IdeaProjects\\ProjetPCOO\\src\\main\\images\\cloud.png");
     }
 
     @Override
