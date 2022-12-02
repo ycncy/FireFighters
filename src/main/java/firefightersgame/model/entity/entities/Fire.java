@@ -10,7 +10,6 @@ public class Fire extends Entity {
 
     public Fire(Position position) {
         super(position);
-        this.image = new Image("C:\\Users\\talha\\IdeaProjects\\ProjetPCOO\\src\\main\\images\\fire.png");
     }
 
     @Override

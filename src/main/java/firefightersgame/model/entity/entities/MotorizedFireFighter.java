@@ -10,7 +10,6 @@ public class MotorizedFireFighter extends Entity {
 
     public MotorizedFireFighter(Position position) {
         super(position);
-        this.image = new Image("C:\\Users\\talha\\IdeaProjects\\ProjetPCOO\\src\\main\\images\\motorizedfirefighter.png");
     }
 
     @Override

@@ -10,7 +10,6 @@ public class FireFighter extends Entity {
 
     public FireFighter(Position position) {
         super(position);
-        this.image = new Image("C:\\Users\\talha\\IdeaProjects\\ProjetPCOO\\src\\main\\images\\firefighter.png");
     }
 
     @Override

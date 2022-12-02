@@ -15,26 +15,30 @@ public class MountainVisitor implements ObstacleVisitor {
 
     @Override
     public boolean visitEmptyBox(EmptyBox emptyBox, Position position) {
+        return hasMountainAt(position);
+    }
+
+    private boolean hasMountainAt(Position position) {
         return mountainManager.contains(position) == null;
     }
 
     @Override
     public boolean visitFireFighter(FireFighter fireFighter, Position position) {
-        return mountainManager.contains(position) == null;
+        return hasMountainAt(position);
     }
 
     @Override
     public boolean visitFire(Fire fire, Position position) {
-        return mountainManager.contains(position) == null;
+        return hasMountainAt(position);
     }
 
     @Override
     public boolean visitCloud(Cloud cloud, Position position) {
-        return mountainManager.contains(position) != null;
+        return !hasMountainAt(position);
     }
 
     @Override
     public boolean visitMotorizedFireFighter(MotorizedFireFighter motorizedFireFighter, Position position) {
-        return mountainManager.contains(position) == null;
+        return hasMountainAt(position);
     }
 }
