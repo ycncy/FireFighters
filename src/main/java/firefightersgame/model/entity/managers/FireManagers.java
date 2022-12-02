@@ -67,6 +67,7 @@ public class FireManagers implements EntityManager, Extinguisher {
 
     @Override
     public Position aStepTowardFire(Position position, int rowCount, int colCount) {
+
         Set<Position> seen = new HashSet<>();
         HashMap<Position, Position> firstMove = new HashMap<>();
         Queue<Position> toVisit = new LinkedList<>(position.next(rowCount, colCount));
@@ -82,6 +83,7 @@ public class FireManagers implements EntityManager, Extinguisher {
                     return firstMove.get(current);
                 }
             }
+
             upperfor:
             for (Position adjacent : current.next(rowCount, colCount)) {
                 for (ObstacleManager obstacleManager : obstacleManagers) {
