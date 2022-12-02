@@ -2,7 +2,6 @@ package firefightersgame.model.entity.entities;
 
 import firefightersgame.model.obstacle.managers.MountainManager;
 import firefightersgame.model.obstacle.managers.RoadManager;
-import firefightersgame.model.obstacle.managers.RockeriesManager;
 import generalstructure.model.obstacle.ObstacleVisitor;
 import generalstructure.view.paintingvisitor.*;
 import generalstructure.model.Position;
@@ -21,11 +20,11 @@ public class Fire extends Entity implements ObstacleVisitor {
 
     @Override
     public boolean visitMountain(MountainManager mountainManager) {
-        return false;
+        return !mountainManager.contains(position);
     }
 
     @Override
     public boolean visitRoad(RoadManager roadManager) {
-        return false;
+        return !roadManager.contains(position);
     }
 }

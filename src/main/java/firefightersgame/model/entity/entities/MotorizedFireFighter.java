@@ -20,7 +20,7 @@ public class MotorizedFireFighter extends Entity implements ObstacleVisitor {
 
     @Override
     public boolean visitMountain(MountainManager mountainManager) {
-        return false;
+        return !mountainManager.contains(position);
     }
 
     @Override

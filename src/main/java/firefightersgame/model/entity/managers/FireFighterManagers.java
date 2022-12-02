@@ -30,7 +30,7 @@ public class FireFighterManagers implements EntityManager {
             Position potentialPosition = Position.randomPosition(rowCount, colCount);
             FireFighter potentialFireFighter = new FireFighter(potentialPosition);
             for (ObstacleManager obstacleManager : obstacleManagers) {
-                if (obstacleManager.contains(potentialPosition) && obstacleManager.accept(potentialFireFighter)) {
+                if (!obstacleManager.accept(potentialFireFighter)) {
                     i--;
                     continue upperfor;
                 }

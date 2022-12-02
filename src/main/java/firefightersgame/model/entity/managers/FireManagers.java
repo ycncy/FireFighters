@@ -28,7 +28,7 @@ public class FireManagers implements EntityManager, Extinguisher {
             Position potentialPosition = Position.randomPosition(rowCount, colCount);
             Fire potentialFire = new Fire(potentialPosition);
             for (ObstacleManager obstacleManager : obstacleManagers) {
-                if (obstacleManager.contains(potentialPosition) && !obstacleManager.accept(potentialFire)) {
+                if (!obstacleManager.accept(potentialFire)) {
                     i--;
                     continue upperfor;
                 }
@@ -45,9 +45,7 @@ public class FireManagers implements EntityManager, Extinguisher {
             for (Fire fire : fires) {
                 Set<Position> newFires = new HashSet<>(fire.getPosition().next(rowCount, colCount));
                 for (Position position : newFires) {
-                    for (ObstacleManager obstacleManager : obstacleManagers) {
-                        if (obstacleManager.contains(position) && !obstacleManager.accept(new Fire(position))) continue upperfor;
-                    }
+                    for (ObstacleManager obstacleManager : obstacleManagers) if (!obstacleManager.accept(new Fire(position))) continue upperfor;
                     firesNewPositions.add(new Fire(position));
                 }
             }
@@ -80,14 +78,14 @@ public class FireManagers implements EntityManager, Extinguisher {
 
             if (containsFire(current) != null) {
                 for (ObstacleManager obstacleManager : obstacleManagers) {
-                    if (obstacleManager.contains(current) && !obstacleManager.accept(new FireFighter(current))) break;
+                    if (!obstacleManager.accept(new FireFighter(current))) break;
                     return firstMove.get(current);
                 }
             }
             upperfor:
             for (Position adjacent : current.next(rowCount, colCount)) {
                 for (ObstacleManager obstacleManager : obstacleManagers) {
-                    if (obstacleManager.contains(current) && !obstacleManager.accept(new FireFighter(current))) break upperfor;
+                    if (!obstacleManager.accept(new FireFighter(current))) break upperfor;
                     if (seen.contains(adjacent)) continue;
                     toVisit.add(adjacent);
                     seen.add(adjacent);

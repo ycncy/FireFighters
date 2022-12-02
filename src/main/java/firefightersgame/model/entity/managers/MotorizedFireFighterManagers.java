@@ -29,7 +29,7 @@ public class MotorizedFireFighterManagers implements EntityManager {
             Position potentialPosition = Position.randomPosition(rowCount, colCount);
             MotorizedFireFighter potentialMotorizedFireFighter = new MotorizedFireFighter(potentialPosition);
             for (ObstacleManager obstacleManager : obstacleManagers) {
-                if (obstacleManager.contains(potentialPosition) && !obstacleManager.accept(potentialMotorizedFireFighter)) {
+                if (!obstacleManager.accept(potentialMotorizedFireFighter)) {
                     i--;
                     continue upperfor;
                 }
