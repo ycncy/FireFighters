@@ -1,9 +1,10 @@
 package firefightersgame.model.entity.entities;
 
-import generalstructure.model.obstacle.ObstacleVisitor;
 import generalstructure.view.paintingvisitor.*;
 import generalstructure.model.Position;
 import generalstructure.model.entity.Entity;
+
+import java.util.List;
 
 public class EmptyBox extends Entity {
 
@@ -14,10 +15,5 @@ public class EmptyBox extends Entity {
     @Override
     public void accept(PaintingVisitor paintingVisitor) {
         paintingVisitor.visitEmptyBox(this);
-    }
-
-    @Override
-    public boolean accept(ObstacleVisitor obstacleVisitor, Position position) {
-        return obstacleVisitor.visitEmptyBox(this, position);
     }
 }

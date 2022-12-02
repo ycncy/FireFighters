@@ -2,13 +2,11 @@ package generalstructure.model.obstacle;
 
 import generalstructure.model.Position;
 import generalstructure.view.paintingvisitor.PaintingVisitor;
-import javafx.scene.image.Image;
 import java.util.*;
 
 public abstract class Obstacle {
 
     protected Position position;
-    public Image image;
 
     public Obstacle (Position position) {
         this.position = position;

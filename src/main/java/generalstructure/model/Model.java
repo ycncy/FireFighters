@@ -18,16 +18,15 @@ public class Model {
     }
 
     public void initializeEntities () {
-        for (EntityManager entityManager : entityManagers) entityManager.initialize(rowCount, colCount);
+        for (EntityManager entityManager : this.entityManagers) entityManager.initialize(rowCount, colCount);
     }
 
     public void initializeObstacles () {
-        for (ObstacleManager obstacleManager : obstacleManagers) obstacleManager.initialize(rowCount, colCount);
-
+        for (ObstacleManager obstacleManagers : this.obstacleManagers) obstacleManagers.initialize(rowCount, colCount);
     }
 
     public void activation() {
-        for (EntityManager entityManager : entityManagers) entityManager.update(rowCount, colCount);
+        for (EntityManager entityManager : this.entityManagers) entityManager.update(rowCount, colCount);
     }
 
     public void addAllEntityManagers (EntityManager... entityManagers) {

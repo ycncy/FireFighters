@@ -12,15 +12,15 @@ public class RpsGrid extends Grid {
 
     @Override
     public void initialisation() {
-        model = new Model(rowCount, colCount);
-        RockManager rockManager = new RockManager(1);
-        PaperManager paperManager = new PaperManager(1, rockManager);
-        ScissorsManager scissorsManager = new ScissorsManager(1, paperManager);
-        rockManager.addScissorsManager(scissorsManager);
-
-        model.addAllEntityManagers(rockManager, paperManager, scissorsManager);
-
-        model.initializeEntities();
-        repaint();
+        //model = new Model(rowCount, colCount);
+        //RockManagers rockManager = new RockManagers(1);
+        //PaperManagers paperManager = new PaperManagers(1, rockManager);
+        //ScissorsManagers scissorsManager = new ScissorsManagers(1, paperManager);
+        //rockManager.addScissorsManager(scissorsManager);
+//
+        //model.addAllEntityManagers(rockManager, paperManager, scissorsManager);
+//
+        //model.initializeEntities();
+        //repaint();
     }
 }

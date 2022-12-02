@@ -13,4 +13,7 @@ public record Position (int row, int col) {
         return list;
     }
 
+    public static Position randomPosition(int rowCount, int colCount) {
+        return new Position((int) (Math.random() * rowCount), (int) (Math.random() * colCount));
+    }
 }

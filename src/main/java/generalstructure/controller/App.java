@@ -33,7 +33,7 @@ public class App extends Application {
         Button switchPause = new Button("Pause");
         VBox buttons = new VBox();
         HBox total = new HBox();
-        Grid grid = new RpsGrid(650,650,20,20);
+        Grid grid = new FireFightersGrid(650,650,20,20);
 
         root.getChildren().add(total);
         total.getChildren().add(buttons);
