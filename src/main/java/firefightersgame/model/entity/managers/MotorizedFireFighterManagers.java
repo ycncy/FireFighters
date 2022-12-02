@@ -24,8 +24,17 @@ public class MotorizedFireFighterManagers implements EntityManager {
 
     @Override
     public void initialize(int rowCount, int colCount) {
+        upperfor:
         for (int i = 0; i < amount; i++) {
-            motorizedFireFighters.add(new MotorizedFireFighter(Position.randomPosition(rowCount, colCount)));
+            Position potentialPosition = Position.randomPosition(rowCount, colCount);
+            MotorizedFireFighter potentialMotorizedFireFighter = new MotorizedFireFighter(potentialPosition);
+            for (ObstacleManager obstacleManager : obstacleManagers) {
+                if (obstacleManager.contains(potentialPosition) && !obstacleManager.accept(potentialMotorizedFireFighter)) {
+                    i--;
+                    continue upperfor;
+                }
+            }
+            motorizedFireFighters.add(potentialMotorizedFireFighter);
         }
     }
 

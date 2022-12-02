@@ -25,8 +25,17 @@ public class FireFighterManagers implements EntityManager {
 
     @Override
     public void initialize(int rowCount, int colCount) {
+        upperfor:
         for (int i = 0; i < amount; i++) {
-            fireFighters.add(new FireFighter(Position.randomPosition(rowCount, colCount)));
+            Position potentialPosition = Position.randomPosition(rowCount, colCount);
+            FireFighter potentialFireFighter = new FireFighter(potentialPosition);
+            for (ObstacleManager obstacleManager : obstacleManagers) {
+                if (obstacleManager.contains(potentialPosition) && obstacleManager.accept(potentialFireFighter)) {
+                    i--;
+                    continue upperfor;
+                }
+            }
+            fireFighters.add(potentialFireFighter);
         }
     }
 

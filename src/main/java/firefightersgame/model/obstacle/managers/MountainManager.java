@@ -1,19 +1,25 @@
 package firefightersgame.model.obstacle.managers;
 
+import generalstructure.model.obstacle.ObstacleVisitor;
 import firefightersgame.model.obstacle.obstacles.*;
 import generalstructure.model.Position;
 import generalstructure.model.obstacle.Obstacle;
 import generalstructure.model.obstacle.ObstacleManager;
 import java.util.*;
 
-public class MountainManagers implements ObstacleManager {
+public class MountainManager implements ObstacleManager {
 
     private final int amount;
 
     private final Set<Mountain> mountains = new HashSet<>();
 
-    public MountainManagers(int amount) {
+    public MountainManager(int amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public boolean accept(ObstacleVisitor obstacleVisitor) {
+        return obstacleVisitor.visitMountain(this);
     }
 
     @Override
@@ -27,7 +33,7 @@ public class MountainManagers implements ObstacleManager {
                 nextPositions.add(new Position(sidePosition.row(), sidePosition.col() - current));
             }
             for (Position position : nextPositions) {
-                if (contains(position) == null) mountains.add(new Mountain(position));
+                if (!contains(position)) mountains.add(new Mountain(position));
             }
         }
     }
@@ -38,10 +44,10 @@ public class MountainManagers implements ObstacleManager {
     }
 
     @Override
-    public Mountain contains(Position position) {
+    public boolean contains(Position position) {
         for (Mountain mountain : mountains) {
-            if (mountain.getPosition().equals(position)) return mountain;
+            if (mountain.getPosition().equals(position)) return true;
         }
-        return null;
+        return false;
     }
 }

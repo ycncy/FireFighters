@@ -1,19 +1,25 @@
 package firefightersgame.model.obstacle.managers;
 
+import generalstructure.model.obstacle.ObstacleVisitor;
 import firefightersgame.model.obstacle.obstacles.*;
 import generalstructure.model.Position;
 import generalstructure.model.obstacle.*;
 import generalstructure.model.obstacle.ObstacleManager;
 import java.util.*;
 
-public class RoadManagers implements ObstacleManager {
+public class RoadManager implements ObstacleManager {
 
     private final int amount;
 
     private final Set<Road> roads = new HashSet<>();
 
-    public RoadManagers(int amount) {
+    public RoadManager(int amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public boolean accept(ObstacleVisitor obstacleVisitor) {
+        return obstacleVisitor.visitRoad(this);
     }
 
     @Override
@@ -36,10 +42,10 @@ public class RoadManagers implements ObstacleManager {
     }
 
     @Override
-    public Road contains(Position position) {
+    public boolean contains(Position position) {
         for (Road obstacle : roads) {
-            if (obstacle.getPosition().equals(position)) return obstacle;
+            if (obstacle.getPosition().equals(position)) return true;
         }
-        return null;
+        return false;
     }
 }

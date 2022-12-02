@@ -1,12 +1,13 @@
 package firefightersgame.model.entity.entities;
 
+import firefightersgame.model.obstacle.managers.MountainManager;
+import firefightersgame.model.obstacle.managers.RoadManager;
+import generalstructure.model.obstacle.ObstacleVisitor;
 import generalstructure.view.paintingvisitor.*;
 import generalstructure.model.Position;
 import generalstructure.model.entity.Entity;
 
-import java.util.List;
-
-public class MotorizedFireFighter extends Entity {
+public class MotorizedFireFighter extends Entity implements ObstacleVisitor {
 
     public MotorizedFireFighter(Position position) {
         super(position);
@@ -15,5 +16,15 @@ public class MotorizedFireFighter extends Entity {
     @Override
     public void accept(PaintingVisitor paintingVisitor) {
         paintingVisitor.visitMotorizedFireFighter (this);
+    }
+
+    @Override
+    public boolean visitMountain(MountainManager mountainManager) {
+        return false;
+    }
+
+    @Override
+    public boolean visitRoad(RoadManager roadManager) {
+        return true;
     }
 }

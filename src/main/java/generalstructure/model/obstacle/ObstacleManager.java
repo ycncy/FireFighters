@@ -5,7 +5,8 @@ import java.util.Set;
 
 public interface ObstacleManager {
 
+    boolean accept (ObstacleVisitor obstacleVisitor);
     void initialize (int rowCount, int colCount);
     Set<Obstacle> getObstacles ();
-    Obstacle contains (Position position);
+    boolean contains (Position position);
 }

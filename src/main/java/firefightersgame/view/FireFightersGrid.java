@@ -15,17 +15,17 @@ public class FireFightersGrid extends Grid {
     public void initialisation() {
         model = new Model(rowCount, colCount);
         //CRÉATION DES OBSTACLES
-        MountainManagers mountainManager = new MountainManagers(2);
-        RoadManagers roadManager = new RoadManagers(2);
+        MountainManager mountainManager = new MountainManager(2);
+        RoadManager roadManager = new RoadManager(2);
 
         model.addAllObstacleManagers(mountainManager, roadManager);
         model.initializeObstacles();
 
         //CRÉATION DES ENTITÉS
-        FireManagers fireManager = new FireManagers(1);
-        FireFighterManagers fireFighterManager = new FireFighterManagers(1, fireManager);
+        FireManagers fireManager = new FireManagers(1, mountainManager, roadManager);
+        FireFighterManagers fireFighterManager = new FireFighterManagers(1, fireManager, mountainManager, roadManager);
         CloudManagers cloudManager = new CloudManagers(1, fireManager);
-        MotorizedFireFighterManagers motorizedFireFighterManager = new MotorizedFireFighterManagers(1, fireManager);
+        MotorizedFireFighterManagers motorizedFireFighterManager = new MotorizedFireFighterManagers(1, fireManager, mountainManager, roadManager);
 
         model.addAllEntityManagers(fireManager, fireFighterManager, cloudManager, motorizedFireFighterManager);
         model.initializeEntities();

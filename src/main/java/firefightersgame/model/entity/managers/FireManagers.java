@@ -23,8 +23,17 @@ public class FireManagers implements EntityManager, Extinguisher {
 
     @Override
     public void initialize(int rowCount, int colCount) {
+        upperfor:
         for (int i = 0; i < amount; i++) {
-            fires.add(new Fire(Position.randomPosition(rowCount, colCount)));
+            Position potentialPosition = Position.randomPosition(rowCount, colCount);
+            Fire potentialFire = new Fire(potentialPosition);
+            for (ObstacleManager obstacleManager : obstacleManagers) {
+                if (obstacleManager.contains(potentialPosition) && !obstacleManager.accept(potentialFire)) {
+                    i--;
+                    continue upperfor;
+                }
+            }
+            fires.add(potentialFire);
         }
     }
 
@@ -32,9 +41,13 @@ public class FireManagers implements EntityManager, Extinguisher {
     public void update(int rowCount, int colCount) {
         if (step % 2 == 0) {
             Set<Fire> firesNewPositions = new HashSet<>();
+            upperfor:
             for (Fire fire : fires) {
                 Set<Position> newFires = new HashSet<>(fire.getPosition().next(rowCount, colCount));
                 for (Position position : newFires) {
+                    for (ObstacleManager obstacleManager : obstacleManagers) {
+                        if (obstacleManager.contains(position) && !obstacleManager.accept(new Fire(position))) continue upperfor;
+                    }
                     firesNewPositions.add(new Fire(position));
                 }
             }
@@ -66,14 +79,20 @@ public class FireManagers implements EntityManager, Extinguisher {
             Position current = toVisit.poll();
 
             if (containsFire(current) != null) {
-                return firstMove.get(current);
+                for (ObstacleManager obstacleManager : obstacleManagers) {
+                    if (obstacleManager.contains(current) && !obstacleManager.accept(new FireFighter(current))) break;
+                    return firstMove.get(current);
+                }
             }
-
+            upperfor:
             for (Position adjacent : current.next(rowCount, colCount)) {
-                if (seen.contains(adjacent)) continue;
-                toVisit.add(adjacent);
-                seen.add(adjacent);
-                firstMove.put(adjacent, firstMove.get(current));
+                for (ObstacleManager obstacleManager : obstacleManagers) {
+                    if (obstacleManager.contains(current) && !obstacleManager.accept(new FireFighter(current))) break upperfor;
+                    if (seen.contains(adjacent)) continue;
+                    toVisit.add(adjacent);
+                    seen.add(adjacent);
+                    firstMove.put(adjacent, firstMove.get(current));
+                }
             }
         }
         return position;

@@ -1,5 +1,6 @@
 package firefightersgame.model.obstacle.managers;
 
+import generalstructure.model.obstacle.ObstacleVisitor;
 import firefightersgame.model.obstacle.obstacles.Rockeries;
 import generalstructure.model.Position;
 import generalstructure.model.obstacle.Obstacle;
@@ -7,14 +8,19 @@ import generalstructure.model.obstacle.ObstacleManager;
 
 import java.util.*;
 
-public class RockeriesManagers implements ObstacleManager {
+public class RockeriesManager implements ObstacleManager {
 
     private final int amount;
 
     private final Set<Rockeries> rockeries = new HashSet<>();
 
-    public RockeriesManagers(int amount) {
+    public RockeriesManager(int amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public boolean accept(ObstacleVisitor obstacleVisitor) {
+        return false;
     }
 
     @Override
@@ -28,7 +34,7 @@ public class RockeriesManagers implements ObstacleManager {
                 nextPositions.add(new Position(sidePosition.row(), sidePosition.col() - current));
             }
             for (Position position : nextPositions) {
-                if (contains(position) == null) rockeries.add(new Rockeries(position));
+                if (!contains(position)) rockeries.add(new Rockeries(position));
             }
         }
     }
@@ -39,10 +45,10 @@ public class RockeriesManagers implements ObstacleManager {
     }
 
     @Override
-    public Rockeries contains(Position position) {
+    public boolean contains(Position position) {
         for (Rockeries rockeriesElement : rockeries) {
-            if (rockeriesElement.getPosition().equals(position)) return rockeriesElement;
+            if (rockeriesElement.getPosition().equals(position)) return true;
         }
-        return null;
+        return false;
     }
 }
